@@ -1,0 +1,208 @@
+*
+  box-sizing border-box
+  font-family 'Montserrat'
+  font-size 14px
+  font-weight 600
+
+body
+  padding 0
+  margin 0
+
+html
+  min-height 100vh
+  position relative
+
+h2
+  font-family 'Marck Script'
+  font-weight 400
+  font-size 42px
+  line-height initial
+  text-align center
+
+h3
+  font-family 'Marck Script'
+  font-weight 400
+  font-size 32px
+  line-height initial
+
+main
+  padding 4em
+
+.button
+  padding 8px 12px
+  border-radius 4px
+  border none
+  cursor pointer
+  transform scale(1)
+  transition: all 0.3s ease-in-out
+  min-width 100px
+  background-color white
+  &:hover
+    box-shadow 0 0 0 20px #333 inset
+    color white
+  &:active
+    transform scale(0.9)
+
+
+.price
+  display flex
+  transition: all 0.3s ease-in-out
+  min-width 130px
+
+  .rub
+    display flex
+    font-size 16px
+    font-weight 700
+    line-height 17px
+
+    .zeros
+      font-size 10px
+      position relative
+      top -2px
+      font-weight 700
+
+    .curr
+      font-size 10px
+      position relative
+      top -2px
+      margin-left 3px
+      font-weight 700
+
+  .usd
+    font-size 13px
+    color #6c6c6c
+    display flex
+    align-items start
+    margin-left 4px
+    position relative
+    top -1px
+
+    .zeros
+      font-size 10px
+      font-weight 600
+
+    .curr
+      font-size 10px
+      font-weight 600
+      margin-left 3px
+
+.products
+  margin-top 4em
+  background rgba(54, 54, 54, 0.1)
+  border-radius 20px
+  box-shadow 0 0 0 3px white inset, 0 0 0 6px rgba(54, 54, 54, 0.1)
+  padding: 20px 51px;
+  position relative
+
+.product
+  display flex
+  position relative
+  flex-wrap wrap
+  gap 15px
+  margin 30px 0
+  align-items first baseline
+  .title
+    font-weight 500
+    text-decoration none
+    line-height 15px
+    letter-spacing -0.03em
+    color #333
+    transition all 0.2s ease
+    flex 1
+    min-width 300px
+
+.count-in-cart
+  min-width 100px
+  min-height 30px
+  display flex
+
+  button
+    border-radius 4px
+    color #333
+    border none
+    transition all 0.2s ease
+    cursor pointer
+    background-color white
+
+    &.add
+      height 29px
+      padding 7px 0 7px 12px
+      border-radius 4px 0 0 4px
+
+      &:hover
+        box-shadow 15px 0 5px 0 rgba(121, 86, 209, 0.1) inset
+
+      &:active svg
+        transform scale(1.5)
+
+      svg
+        top -4px
+        transform scale(1)
+        transition all 0.2s ease
+
+    &.sub
+      height 29px
+      padding 7px 12px 7px 0
+      border-radius 0 4px 4px 0
+
+      &:hover
+        box-shadow -15px 0 5px 0 rgba(121, 86, 209, 0.1) inset
+
+      &:active svg
+        transform scale(1.5)
+
+      svg
+        top 1px
+        transform scale(1)
+        transition all 0.2s ease
+
+    &:disabled svg
+      opacity 0.3
+
+      &:active
+        transform scale(1)
+
+    &:disabled:hover
+      box-shadow none
+
+    svg
+      position relative
+
+  input
+    max-width 50px
+    border none
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield;
+    outline none
+    height 29px
+    padding 7px 5px
+    text-align center
+    background-color white
+
+    .price
+      display flex
+      transition: all 0.3s ease-in-out
+      min-width 130px
+
+      .disc
+        display flex
+        font-size 14px
+        font-weight 700
+        line-height 17px
+
+      .zeros
+        font-size 8px
+        position relative
+        top -2px
+        font-weight 700
+
+      .curr
+        font-size 8px
+        position relative
+        top -2px
+        margin-left 3px
+        font-weight 700
+
+
+
