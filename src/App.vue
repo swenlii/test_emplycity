@@ -64,6 +64,7 @@ export default {
       this.currencyTimeout = setTimeout(this.updateCurrTimeout, 1000);
     },
     updateCurr() { // ручное обновление валюты
+      console.log('Update currency')
       this.timerLeft = 15;
       this.curr = Math.floor(Math.random() * (80 - 20 + 1) + 20);
       this.$store.dispatch('getGoods', {curr: this.curr, isCurrUp: this.curr > this.$store.state.rub});
