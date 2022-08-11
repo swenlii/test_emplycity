@@ -1,33 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap')
+
+rose = #FF0A47
+rose_01 = rgba(255, 49, 62, 0.1)
+rose_02 = rgba(255, 49, 62, 0.2)
+green = #0affc6
+green_01 = rgba(10, 255, 198, 0.1)
+green_02 = rgba(10, 255, 198, 0.2)
+
+// Общие стили
+
 *
   box-sizing border-box
   font-family 'Montserrat'
   font-size 14px
   font-weight 600
+  color white
 
 body
   padding 0
   margin 0
-
-html
-  min-height 100vh
-  position relative
+  background-color #0c091a
 
 h2
-  font-family 'Marck Script'
-  font-weight 400
+  font-weight 300
   font-size 42px
-  line-height initial
   text-align center
 
 h3
-  font-family 'Marck Script'
-  font-weight 400
+  font-weight 300
   font-size 32px
-  line-height initial
 
 main
   padding 4em
 
+// все кнопки кроме кнопок счетчика
 .button
   padding 8px 12px
   border-radius 4px
@@ -37,93 +43,112 @@ main
   transition: all 0.3s ease-in-out
   min-width 100px
   background-color white
+
   &:hover
     box-shadow 0 0 0 20px #333 inset
     color white
+
   &:active
+    transition: all 0.1s ease
     transform scale(0.9)
 
-
+// Все цены
 .price
   display flex
   transition: all 0.3s ease-in-out
   min-width 130px
+  font-size 14px
 
   .rub
     display flex
-    font-size 16px
+    font-size 1.3em
     font-weight 700
     line-height 17px
 
     .zeros
-      font-size 10px
+      font-size 0.65em
       position relative
       top -2px
       font-weight 700
 
     .curr
-      font-size 10px
+      font-size 0.65em
       position relative
       top -2px
       margin-left 3px
       font-weight 700
 
   .usd
-    font-size 13px
-    color #6c6c6c
+    font-size 0.93em
+    color #494659
     display flex
-    align-items start
     margin-left 4px
     position relative
-    top -1px
+    top -2px
 
     .zeros
-      font-size 10px
+      font-size 0.8em
       font-weight 600
+      color inherit
+      position relative
+      top 1px
 
     .curr
-      font-size 10px
-      font-weight 600
+      font-size 0.8em
       margin-left 3px
+      color inherit
+      position relative
+      top 1px
 
+// блок с товарами
 .products
   margin-top 4em
-  background rgba(54, 54, 54, 0.1)
+  background #171428
   border-radius 20px
-  box-shadow 0 0 0 3px white inset, 0 0 0 6px rgba(54, 54, 54, 0.1)
-  padding: 20px 51px;
-  position relative
+  padding 20px 51px
 
+  &.red
+    border 2px solid rose
+
+  &.red h2
+  &.red h3
+    color rose
+
+  &.green
+    border 2px solid green
+
+  &.green h2
+  &.green h3
+    color green
+
+// Строка товара (в корзине/в списке)
 .product
   display flex
-  position relative
   flex-wrap wrap
   gap 15px
   margin 30px 0
   align-items first baseline
+
   .title
     font-weight 500
-    text-decoration none
-    line-height 15px
     letter-spacing -0.03em
-    color #333
     transition all 0.2s ease
-    flex 1
     min-width 300px
+    flex 1
 
 .count-in-cart
   min-width 100px
   min-height 30px
   display flex
 
+  // кнопки счетчика
   button
     border-radius 4px
-    color #333
     border none
     transition all 0.2s ease
     cursor pointer
-    background-color white
 
+    // кнопка "+"
     &.add
       height 29px
       padding 7px 0 7px 12px
@@ -140,6 +165,7 @@ main
         transform scale(1)
         transition all 0.2s ease
 
+    // кнопка "-"
     &.sub
       height 29px
       padding 7px 12px 7px 0
@@ -156,53 +182,62 @@ main
         transform scale(1)
         transition all 0.2s ease
 
-    &:disabled svg
-      opacity 0.3
+    &:disabled
+      svg
+        opacity 0.3
 
-      &:active
-        transform scale(1)
-
-    &:disabled:hover
-      box-shadow none
+      &:hover
+        box-shadow none !important
 
     svg
       position relative
 
+  // инпут где отображается кол-во товара
   input
     max-width 50px
     border none
     -webkit-appearance: none;
-    margin: 0;
     -moz-appearance: textfield;
     outline none
     height 29px
-    padding 7px 5px
     text-align center
     background-color white
+    color #333
 
-    .price
-      display flex
-      transition: all 0.3s ease-in-out
-      min-width 130px
+// Mobile
+@media screen and (max-width: 600px)
+  main
+    padding 20px
 
-      .disc
-        display flex
-        font-size 14px
-        font-weight 700
-        line-height 17px
+  h2
+    font-size 32px
 
-      .zeros
-        font-size 8px
-        position relative
-        top -2px
-        font-weight 700
+  h3
+    font-size 32px
 
-      .curr
-        font-size 8px
-        position relative
-        top -2px
-        margin-left 3px
-        font-weight 700
+  .products
+    margin-top 3em
+    border-radius 10px
+    padding 20px
 
+    h3
+      padding-bottom 10px
 
+    &.red h3
+      border-bottom 1px solid rose
 
+    &.green h3
+      border-bottom 1px solid green
+
+  .product
+    gap 10px
+    margin 50px 0
+
+  .title
+    font-weight 700 !important
+    min-width 200px !important
+
+  .price
+    .rub .zeros
+    .rub .curr
+      color #acacb7

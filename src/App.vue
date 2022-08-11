@@ -3,21 +3,26 @@
     Swenlii's test task
   </div>
   <main>
+    <!-- Таймер -->
     <div class="timer">
       <h2>Timer</h2>
       <div class="info">
-        <div class="value">Currency: {{this.curr}}</div>
-        <div class="time-left">Time left: {{timerLeft}}</div>
+        <div class="value">Currency: {{ this.curr }}</div>
+        <div class="time-left">Time left: {{ timerLeft }}</div>
       </div>
-      <div class="info"><button @click="updateCurr">Update Currency Now</button></div>
+      <div class="info">
+        <button class="button" @click="updateCurr">Update Currency Now</button>
+      </div>
     </div>
-    <div class="products">
+    <!-- Список продуктов -->
+    <div :class="this.$store.state.isCurrUp ? 'products red' : 'products green'">
       <h2>Products</h2>
       <OneGroup :goods="group.goods"
-               :title="group.title"
-               v-for="group in this.$store.getters.goods()"
-               v-bind:key="'group' + group.id"></OneGroup>
+                :title="group.title"
+                v-for="group in this.$store.getters.goods()"
+                v-bind:key="'group' + group.id"></OneGroup>
     </div>
+    <!-- Корзина -->
     <CartComponent></CartComponent>
   </main>
 </template>
@@ -34,115 +39,83 @@ export default {
   },
   data() {
     return {
-      curr: 20,
-      currencyTimeout: null,
-      timerLeft: 15,
+      curr: 40,
+      timerLeft: 0,
+      currencyTimeout: null
     }
   },
   async mounted() {
-    await this.$store.dispatch('getGoods');
-    this.currencyTimeout = setTimeout(this.updateCurrTimeout, 1000);
+    this.updateCurrTimeout() // обновляем валюту
   },
   methods: {
-    updateCurrTimeout() {
-      this.timerLeft--;
+    updateCurrTimeout() { // автоматическое обновление валюты
       if (this.timerLeft === 0) {
         this.timerLeft = 15;
+        // Случайное число 20..80
         this.curr = Math.floor(Math.random() * (80 - 20 + 1) + 20);
-        this.$store.commit('updateCurrency', {curr: this.curr, isCurrUp: this.curr > this.$store.state.rub_usd});
+        // Обновляем все продукты
+        // curr: валюта
+        // isCurrUp: bool значение, поднялась или опустилась валюта
+        this.$store.dispatch('getGoods', {curr: this.curr, isCurrUp: this.curr > this.$store.state.rub});
+      } else {
+        this.timerLeft--;
       }
       clearTimeout(this.currencyTimeout);
       this.currencyTimeout = setTimeout(this.updateCurrTimeout, 1000);
     },
-    updateCurr() {
+    updateCurr() { // ручное обновление валюты
       this.timerLeft = 15;
       this.curr = Math.floor(Math.random() * (80 - 20 + 1) + 20);
-      this.$store.commit('updateCurrency', {curr: this.curr, isCurrUp: this.curr > this.$store.state.rub_usd});
-      clearTimeout(this.currencyTimeout);
-      this.currencyTimeout = setTimeout(this.updateCurrTimeout, 1000);
+      this.$store.dispatch('getGoods', {curr: this.curr, isCurrUp: this.curr > this.$store.state.rub});
     }
-  },
-  computed: {}
+  }
 }
 </script>
 
 <style lang="stylus">
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap')
-@import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
+blue = #0ad6ff
+blue_01 = rgba(10, 214, 255, 0.1)
 @import './assets/style/style.styl'
 
 .logo
-  font-family 'Marck Script'
-  font-weight 400
+  font-weight 300
   font-size 82px
-  line-height initial
-  background-color gray_1
   display flex
   justify-content center
   padding 12px
-  color #363636
+  color #ff0fd7
 
 .timer
   padding 3em
-  background rgba(51, 182, 222, 0.3)
+  background #171428
   border-radius 20px
-  box-shadow 0 0 0 3px white inset, 0 0 0 6px rgba(51, 182, 222, 0.3)
-  color #333
+  border 2px solid blue
+
+  h2
+    color blue
+
   .info
     display flex
     justify-content center
     gap 1em
     margin 1em 0
+
   .value
     font-size 16px
+
   .time-left
     font-size 16px
+
   button
-    color #333
-    background white
-    padding 7px 12px
-    border-radius 4px
-    cursor pointer
-    transform scale(1)
-    transition: all 0.3s ease-in-out
-    border 1px solid white
+    color blue
+    background blue_01
+
     &:hover
-      box-shadow 0 0 0 20px rgba(51, 182, 222, 0.3) inset
-      border 1px solid #333
-    &:active
-      transform scale(0.9)
+      box-shadow 0 0 0 20px blue inset
+      color white
 
-.pages-enter-from
-  position relative
-  transform translateX(100%)
-  opacity 0
-
-.pages-enter-to
-  transform translateX(0)
-  opacity 1
-
-.pages-leave-from
-  position absolute
-  transform translateX(-20px)
-  opacity 1
-
-.pages-leave-to
-  position absolute
-  opacity 0
-  transform translateX(-100%)
-
-.pages-enter-active
-  transition all 0.7s ease;
-
-.pages-leave-active
-  top 51px
-  position absolute
-  transition all 0.7s ease;
-
+// Mobile
 @media screen and (max-width: 600px)
-  .content
-    padding: 46px 15px 53px 15px;
-
   .logo
   .logo
     padding 3px
@@ -150,4 +123,8 @@ export default {
 
   .pages-leave-active
     top 46px
+
+  .timer
+    padding 20px
+    border-radius 10px
 </style>
